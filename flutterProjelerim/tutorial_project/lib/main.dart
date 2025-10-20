@@ -10,16 +10,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-
+      theme: ThemeData(//theme = temayı kasteder ve uygulama tasarım özelliklerini tutar
+      primaryColor: Colors.teal,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Başlık'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+          title: Text('Başlık'),
+          ),         
         body: Text('Merhaba Dünya'),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
+        floatingActionButton: FloatingActionButton(//bu buton standart olarak uygulamanı sağ alt tarafında gözükür
+          onPressed: () {//onPressed anlamı geriye herhangi  bir değer döndürmeyen bir parametre
             debugPrint('Tıklandı');
           },
+          backgroundColor: Colors.red,
+          child: Text('e'),//child metodu her zaman FloatingActionButtonun en sonunda yer almalıdır aksi takdirde uyarı verir 
         ),
       ),
     );
