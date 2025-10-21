@@ -39,6 +39,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late FirebaseAuth auth;
+  late GoogleSignIn googleSignIn;
   final String _email = 'emrealtunbilek06@gmail.com';
   final String _password = 'password';
 
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     auth = FirebaseAuth.instance;
+    googleSignIn = GoogleSignIn();
 
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
@@ -71,56 +73,56 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 createUserEmailAndPassword();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.red),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               child: const Text('Email/Sifre Kayıt'),
             ),
             ElevatedButton(
               onPressed: () {
                 loginUserEmailAndPassword();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.blue),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
               child: const Text('Email/Sifre Giris'),
             ),
             ElevatedButton(
               onPressed: () {
                 signOutUser();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.yellow),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
               child: const Text('Oturumu Kapat'),
             ),
             ElevatedButton(
               onPressed: () {
                 deleteUser();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.purple),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
               child: const Text('Kullanıcıyı sil'),
             ),
             ElevatedButton(
               onPressed: () {
                 changePassword();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.brown),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
               child: const Text('Parola Değiştir'),
             ),
             ElevatedButton(
               onPressed: () {
                 changeEmail();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.pink),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
               child: const Text('Email Değiştir'),
             ),
             ElevatedButton(
               onPressed: () {
                 googleIleGiris();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.green),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               child: const Text('gmail ile giriş '),
             ),
             ElevatedButton(
               onPressed: () {
                 loginWithPhoneNumber();
               },
-              style: ElevatedButton.styleFrom(primary: Colors.amber),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
               child: const Text('Tel no ile giriş '),
             ),
           ],
@@ -183,9 +185,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void signOutUser() async {
-    var _user = GoogleSignIn().currentUser;
+    var _user = googleSignIn.currentUser;
     if (_user != null) {
-      await GoogleSignIn().signOut();
+      await googleSignIn.signOut();
     }
     await auth.signOut();
   }
@@ -219,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void googleIleGiris() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
@@ -237,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changeEmail() async {
     try {
-      await auth.currentUser!.updateEmail('emre@emre.com');
+      await auth.currentUser!.verifyBeforeUpdateEmail('emre@emre.com');
       await auth.signOut();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
@@ -246,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
             EmailAuthProvider.credential(email: _email, password: _password);
         await auth.currentUser!.reauthenticateWithCredential(credential);
 
-        await auth.currentUser!.updateEmail('emrealtunbilek@gmail.com');
+        await auth.currentUser!.verifyBeforeUpdateEmail('emrealtunbilek@gmail.com');
         await auth.signOut();
         debugPrint('email güncellendi');
       }
