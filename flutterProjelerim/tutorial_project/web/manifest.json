@@ -1,6 +1,6 @@
 {
-    "name": "tutorial_project",
-    "short_name": "tutorial_project",
+    "name": "flutter_ders",
+    "short_name": "flutter_ders",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

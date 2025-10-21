@@ -1,279 +1,111 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
-import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart'; //firebase kütüphaneleri
+import 'package:flutter_ders/pages/login_register_page.dart';
+import 'firebase_options.dart'; //firebase kütüphaneleri
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();//firebase eklentisi
+  //firebase içeri aktarma kodu
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  //Firebase
+  //.....
+  runApp(const WidgetDetail());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class WidgetDetail extends StatelessWidget {
+  const WidgetDetail({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { //İçerik Kısmı 
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-<<<<<<< HEAD
-      home: const MyHomePage(title: 'Flutter Firebase Dersleri'),
+      home: const LoginRegisterPage(),//home başlangıç yeridir ben deneme amaçlı login sayfasını görmek için ekledim 
+      // Scaffold(//Aşağıdakiler Giriş Sayfasına Aittir
+      //   appBar: AppBar(
+      //     title: const Text("Uygulamanın Adı"),
+      //     centerTitle: true,
+      //     backgroundColor: Colors.deepOrange,
+          
+      //   ),
+      //   body: LayoutBuilder(
+      //     builder: (context, constraints) {
+      //       final screenWidth = constraints.maxWidth;
+      //       final screenHeight = constraints.maxHeight;
+            
+      //       return Stack(
+      //         children: [ //BUTONLARIN TANIMLANDIĞI YER
+      //           // Main content with centered Login button
+      //           Center(
+      //             child: Column(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: [
+      //                 // Login Button - responsive sizing
+      //                 SizedBox(
+      //                   width: screenWidth * 0.6, // 60% of screen width
+      //                   height: screenHeight * 0.07, // 7% of screen height
+      //                   child: ElevatedButton(
+      //                     onPressed: () {//Giriş Yap butonuna tıklandığında çalışacak fonksiyon
+      //                       // Add login functionality here
+      //                       //debugPrint('Login pressed');
+      //                     },
+      //                     style: ElevatedButton.styleFrom(
+      //                       backgroundColor: Colors.deepOrange,
+      //                       foregroundColor: Colors.white,
+      //                       shape: RoundedRectangleBorder(
+      //                         borderRadius: BorderRadius.circular(screenWidth * 0.06), // Responsive border radius
+      //                       ),
+      //                       elevation: 5,
+      //                     ),
+      //                     child: Text(
+      //                       'Giriş Yap',
+      //                       style: TextStyle(
+      //                         fontSize: screenWidth * 0.045, // Responsive font size
+      //                         fontWeight: FontWeight.bold,
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+                
+      //           // KAYIT OL BUTONU
+      //           Positioned(
+      //             bottom: 0,
+      //             left: 0,
+      //             right: 0,
+      //             child: SizedBox(
+      //               height: screenHeight * 0.12, // 12% of screen height
+      //               child: ElevatedButton(
+      //                 onPressed: () {//Kayıt Ol butonuna tıklandığında çalışacak fonksiyon
+                        
+      //                 },
+      //                 style: ElevatedButton.styleFrom(
+      //                   backgroundColor: Colors.grey.withValues(alpha: 0.05),
+      //                   foregroundColor: Colors.black87,
+      //                   shape: RoundedRectangleBorder(
+      //                     borderRadius: BorderRadius.only(
+      //                       topLeft: Radius.circular(screenWidth * 0.06), // Responsive border radius
+      //                       topRight: Radius.circular(screenWidth * 0.06), // Responsive border radius
+      //                     ),
+      //                   ),
+      //                   elevation: 3,
+      //                 ),
+      //                 child: Text(
+      //                   'Kayıt Ol',
+      //                   style: TextStyle(
+      //                     fontSize: screenWidth * 0.045, // Responsive font size
+      //                     fontWeight: FontWeight.bold,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  late FirebaseAuth auth;
-  late GoogleSignIn googleSignIn;
-  final String _email = 'emrealtunbilek06@gmail.com';
-  final String _password = 'password';
-
-  @override
-  void initState() {
-    super.initState();
-    auth = FirebaseAuth.instance;
-    googleSignIn = GoogleSignIn();
-
-    auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        debugPrint('User oturumu kapalı');
-      } else {
-        debugPrint(
-            'User oturum açık ${user.email} ve email durumu ${user.emailVerified}');
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                createUserEmailAndPassword();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('Email/Sifre Kayıt'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                loginUserEmailAndPassword();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              child: const Text('Email/Sifre Giris'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                signOutUser();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-              child: const Text('Oturumu Kapat'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                deleteUser();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
-              child: const Text('Kullanıcıyı sil'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                changePassword();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
-              child: const Text('Parola Değiştir'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                changeEmail();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
-              child: const Text('Email Değiştir'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                googleIleGiris();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: const Text('gmail ile giriş '),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                loginWithPhoneNumber();
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-              child: const Text('Tel no ile giriş '),
-            ),
-          ],
-=======
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Başlık'),
-          ),         
-        body: Text('Merhaba Dünya'),
-        floatingActionButton: FloatingActionButton(//bu buton standart olarak uygulamanı sağ alt tarafında gözükür
-          onPressed: () {//onPressed anlamı geriye herhangi  bir değer döndürmeyen bir parametre
-            debugPrint('Tıklandı');
-          },
-          backgroundColor: Colors.red,
-          child: Text('e'),//child metodu her zaman FloatingActionButtonun en sonunda yer almalıdır aksi takdirde uyarı verir 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 22123b0 (Update main.dart)
-=======
->>>>>>> parent of 22123b0 (Update main.dart)
-=======
->>>>>>> parent of 22123b0 (Update main.dart)
-        ),
-      ),
-    );
-  }
-
-  void loginWithPhoneNumber() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+905547126450',
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        debugPrint('verification completed tetiklendi');
-        debugPrint(credential.toString());
-        await auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        debugPrint(e.toString());
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        String _smsCode = "123456";
-        debugPrint('code sent tetiklendi');
-        var _credential = PhoneAuthProvider.credential(
-            verificationId: verificationId, smsCode: _smsCode);
-
-        await auth.signInWithCredential(_credential);
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        debugPrint('code auto retrieval timeout');
-      },
-    );
-  }
-
-  void createUserEmailAndPassword() async {
-    try {
-      var _userCredential = await auth.createUserWithEmailAndPassword(
-          email: _email, password: _password);
-      var _myUser = _userCredential.user;
-
-      if (!_myUser!.emailVerified) {
-        await _myUser.sendEmailVerification();
-      } else {
-        debugPrint('kullanıcın maili onaylanmış, ilgili sayfaya gidebilir.');
-      }
-
-      debugPrint(_userCredential.toString());
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void loginUserEmailAndPassword() async {
-    try {
-      var _userCredential = await auth.signInWithEmailAndPassword(
-          email: _email, password: _password);
-      debugPrint(_userCredential.toString());
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void signOutUser() async {
-    var _user = googleSignIn.currentUser;
-    if (_user != null) {
-      await googleSignIn.signOut();
-    }
-    await auth.signOut();
-  }
-
-  void deleteUser() async {
-    if (auth.currentUser != null) {
-      await auth.currentUser!.delete();
-    } else {
-      debugPrint('Kullanıcı oturum açmadığı için silinemez');
-    }
-  }
-
-  void changePassword() async {
-    try {
-      await auth.currentUser!.updatePassword('password');
-      await auth.signOut();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'requires-recent-login') {
-        debugPrint('reauthenticate olunacak');
-        var credential =
-            EmailAuthProvider.credential(email: _email, password: _password);
-        await auth.currentUser!.reauthenticateWithCredential(credential);
-
-        await auth.currentUser!.updatePassword('password');
-        await auth.signOut();
-        debugPrint('şifre güncellendi');
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void googleIleGiris() async {
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  void changeEmail() async {
-    try {
-      await auth.currentUser!.verifyBeforeUpdateEmail('emre@emre.com');
-      await auth.signOut();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'requires-recent-login') {
-        debugPrint('reauthenticate olunacak');
-        var credential =
-            EmailAuthProvider.credential(email: _email, password: _password);
-        await auth.currentUser!.reauthenticateWithCredential(credential);
-
-        await auth.currentUser!.verifyBeforeUpdateEmail('emrealtunbilek@gmail.com');
-        await auth.signOut();
-        debugPrint('email güncellendi');
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-}
+//ashfıohaıosfpıahfajfouafouasposfuapo
