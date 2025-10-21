@@ -139,6 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           backgroundColor: Colors.red,
           child: Text('e'),//child metodu her zaman FloatingActionButtonun en sonunda yer almalıdır aksi takdirde uyarı verir 
+<<<<<<< HEAD
+>>>>>>> parent of 22123b0 (Update main.dart)
+=======
 >>>>>>> parent of 22123b0 (Update main.dart)
         ),
       ),
