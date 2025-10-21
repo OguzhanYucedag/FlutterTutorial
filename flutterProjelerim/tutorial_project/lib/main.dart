@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+<<<<<<< HEAD
       home: const MyHomePage(title: 'Flutter Firebase Dersleri'),
     );
   }
@@ -126,6 +127,19 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Tel no ile giriş '),
             ),
           ],
+=======
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Başlık'),
+          ),         
+        body: Text('Merhaba Dünya'),
+        floatingActionButton: FloatingActionButton(//bu buton standart olarak uygulamanı sağ alt tarafında gözükür
+          onPressed: () {//onPressed anlamı geriye herhangi  bir değer döndürmeyen bir parametre
+            debugPrint('Tıklandı');
+          },
+          backgroundColor: Colors.red,
+          child: Text('e'),//child metodu her zaman FloatingActionButtonun en sonunda yer almalıdır aksi takdirde uyarı verir 
+>>>>>>> parent of 22123b0 (Update main.dart)
         ),
       ),
     );
