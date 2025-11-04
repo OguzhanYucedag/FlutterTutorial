@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; //firebase kütüphaneleri
+import 'package:flutter_ders/firestore_islemleri.dart';
 // import 'package:flutter_ders/pages/login_register_page.dart';
 import 'firebase_options.dart'; //firebase kütüphaneleri
 
@@ -77,7 +78,11 @@ class WidgetDetail extends StatelessWidget {
                     height: screenHeight * 0.12, // 12% of screen height
                     child: ElevatedButton(
                       onPressed: () {//Kayıt Ol butonuna tıklandığında çalışacak fonksiyon
-                        
+                        // 🔽 Butona basınca diğer sayfaya geç
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FirestoreIslemleri()),
+                          );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey.withValues(alpha: 0.05),
